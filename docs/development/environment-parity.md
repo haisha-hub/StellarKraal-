@@ -61,9 +61,11 @@ The tag is controlled by one value on each side:
 - Compose: `IMAGE_TAG` (default `latest`, see `.env.example`)
 - Terraform: `image_tag` in `terraform/variables.tf` (default `latest`)
 
-Keep the defaults identical. To release a specific build, set `IMAGE_TAG` for Compose and
-pass `-var image_tag=<tag>` to Terraform with the same value, so the image you test locally is the
-image that ships.
+Keep the defaults identical. These defaults are what a local Compose build and a first Terraform
+bootstrap use. The production deploy in `.github/workflows/deploy.yml` pushes each build to ECR tagged
+with the git commit SHA and replaces the task definition image at deploy time, so the Terraform tag
+is only the starting value. See [Production deployment guide](../deployment/production-deployment-guide.md#4-image-tagging-conventions)
+for the full tagging rules.
 
 ## 4. Verifying parity by hand
 
